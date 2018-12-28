@@ -31,7 +31,8 @@ def read_configuration_file(configuration_file):
         return dict()
 
 def getSceneNames(conf,myListSceneOrSwitch):
-    myURL="https://"+conf.get("secret").get("domoticz_ip")+':'+conf.get("secret").get("domoticz_port")+'/json.htm?type=scenes'
+#    myURL="https://"+conf.get("secret").get("domoticz_ip")+':'+conf.get("secret").get("domoticz_port")+'/json.htm?type=scenes'
+    myURL="https://"+conf.get("secret").get("domoticz_ip")+'/json.htm?type=scenes'
     response = urllib2.urlopen(myURL)
     jsonresponse = json.load(response)
     for scene in jsonresponse["result"]:
@@ -39,7 +40,8 @@ def getSceneNames(conf,myListSceneOrSwitch):
         myListSceneOrSwitch[(scene["idx"])] = {'Type':'switchscene','Name':myName}
     return myListSceneOrSwitch
 def getSwitchNames(conf,myListSceneOrSwitch):
-    myURL="https://"+conf.get("secret").get("domoticz_ip")+':'+conf.get("secret").get("domoticz_port")+'/json.htm?type=command&param=getlightswitches'
+#    myURL="https://"+conf.get("secret").get("domoticz_ip")+':'+conf.get("secret").get("domoticz_port")+'/json.htm?type=command&param=getlightswitches'
+    myURL="https://"+conf.get("secret").get("domoticz_ip")+'/json.htm?type=command&param=getlightswitches'
     response = urllib2.urlopen(myURL)
     jsonresponse = json.load(response)
     for sw in jsonresponse["result"]:
@@ -80,7 +82,8 @@ def BuildActionSlotList(intent):
     return intentSwitchActionList
 
 def curlCmd(idx,myCmd,myParam,conf):
-    command_url="https://"+conf.get("secret").get("domoticz_ip")+':'+conf.get("secret").get("domoticz_port")+'/json.htm?type=command&param='+myParam+'&idx='+str(idx)+'&switchcmd='+myCmd
+#    command_url="https://"+conf.get("secret").get("domoticz_ip")+':'+conf.get("secret").get("domoticz_port")+'/json.htm?type=command&param='+myParam+'&idx='+str(idx)+'&switchcmd='+myCmd
+    command_url="https://"+conf.get("secret").get("domoticz_ip")+'/json.htm?type=command&param='+myParam+'&idx='+str(idx)+'&switchcmd='+myCmd
     ignore_result = urllib2.urlopen(command_url)
 
     
@@ -138,6 +141,6 @@ def action_wrapper(hermes, intentMessage, conf):
     
 
 if __name__ == "__main__":
-    with Hermes("localhost:1883") as h:
-        h.subscribe_intent("felinh:IntentLumiere", subscribe_intent_callback) \
+    with Hermes("192.168.5.23:1883") as h:
+        h.subscribe_intent("Guerdal82:IntentLumiere", subscribe_intent_callback) \
          .start()
