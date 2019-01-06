@@ -141,6 +141,6 @@ def action_wrapper(hermes, intentMessage, conf):
     
 
 if __name__ == "__main__":
-    with Hermes("192.168.5.23:1883") as h:
+    with Hermes("192.168.5.30:1883") as h:
         h.subscribe_intent("Guerdal82:IntentLumiere", subscribe_intent_callback) \
          .start()
